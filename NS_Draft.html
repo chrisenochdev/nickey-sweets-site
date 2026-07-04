@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nickey Sweets | Custom Cakes & Desserts</title>
+<meta name="description" content="Nickey Sweets — custom cakes, cupcakes, and desserts made with love. Order your custom cake online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush:#f7e3e6;
+    --blush-deep:#e8b4bc;
+    --pink:#d88a9a;
+    --pink-deep:#c06b7e;
+    --gold:#c9a24b;
+    --gold-light:#e6cd8f;
+    --ivory:#fffaf3;
+    --cream:#fff4e8;
+    --choc:#4a3226;
+    --ink:#2c2018;
+    --purple:#a97cb0;
+    --sky:#8fc1d9;
+    --shadow: 0 20px 60px rgba(76,42,54,0.15);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins',sans-serif;
+    color:var(--ink);
+    background:var(--ivory);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,.serif{font-family:'Playfair Display',serif;}
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+  .container{max-width:1200px; margin:0 auto; padding:0 32px;}
+  section{position:relative;}
+  ::selection{background:var(--pink); color:#fff;}
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--blush);}
+  ::-webkit-scrollbar-thumb{background:var(--pink); border-radius:10px;}
+
+  /* Loader */
+  #loader{
+    position:fixed; inset:0; background:var(--ivory); z-index:9999;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    transition:opacity .8s ease, visibility .8s ease;
+  }
+  #loader.hide{opacity:0; visibility:hidden; pointer-events:none;}
+  .loader-cake{width:70px; height:70px; animation:spin 1.4s linear infinite;}
+  @keyframes spin{ to{transform:rotate(360deg);} }
+  #loader p{font-family:'Playfair Display',serif; letter-spacing:.15em; text-transform:uppercase; font-size:13px; color:var(--pink-deep);}
+
+  /* NAV */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    padding:22px 0; transition:all .4s ease;
+  }
+  header.scrolled{
+    background:rgba(255,250,243,0.92); backdrop-filter:blur(10px);
+    padding:14px 0; box-shadow:0 6px 30px rgba(76,42,54,0.08);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between;}
+  .logo{font-family:'Playfair Display',serif; font-weight:700; font-size:26px; letter-spacing:.02em; color:var(--pink-deep); display:flex; align-items:center; gap:10px;}
+  .logo svg{width:34px; height:34px;}
+  .nav-links{display:flex; gap:36px; align-items:center;}
+  .nav-links a{font-size:14px; font-weight:500; letter-spacing:.03em; position:relative; padding:4px 0; color:var(--ink);}
+  .nav-links a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--pink-deep); transition:width .3s ease;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--pink-deep); color:#fff !important; padding:11px 24px; border-radius:40px;
+    font-size:13px; font-weight:600; letter-spacing:.03em; box-shadow:0 8px 20px rgba(192,107,126,0.35);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .nav-cta:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(192,107,126,0.45);}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:1001;}
+  .burger span{width:26px; height:2px; background:var(--ink); transition:all .3s ease;}
+
+  /* HERO */
+  #hero{
+    min-height:100vh; display:flex; align-items:center; justify-content:center; position:relative;
+    background:linear-gradient(160deg, var(--blush) 0%, var(--cream) 55%, var(--ivory) 100%);
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:1;
+  }
+  .hero-bg img{
+    width:100%; height:100%; object-fit:cover; object-position:center 30%;
+    opacity:.28; filter:saturate(1.05);
+  }
+  .hero-bg::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(160deg, rgba(247,227,230,.88) 0%, rgba(255,244,232,.82) 55%, rgba(255,250,243,.92) 100%);
+  }
+  .hero-blob{position:absolute; border-radius:50%; filter:blur(2px); opacity:.55;}
+  #hero .decor{position:absolute; pointer-events:none; z-index:2;}
+  .hero-inner{position:relative; z-index:5; text-align:center; max-width:820px; padding:0 24px;}
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:.25em; text-transform:uppercase;
+    color:var(--pink-deep); font-weight:600; margin-bottom:22px; opacity:0;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after{content:''; width:26px; height:1px; background:var(--gold);}
+  #hero h1{
+    font-size:clamp(48px,8vw,104px); line-height:1.02; color:var(--ink); font-weight:700;
+    opacity:0;
+  }
+  #hero h1 em{font-style:italic; color:var(--pink-deep);}
+  .hero-sub{
+    font-size:18px; color:#6b5a52; max-width:520px; margin:26px auto 40px; line-height:1.7; opacity:0;
+  }
+  .hero-btns{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; opacity:0;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:17px 34px; border-radius:50px;
+    font-size:14.5px; font-weight:600; letter-spacing:.03em; cursor:pointer; border:none;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .btn-primary{background:var(--pink-deep); color:#fff; box-shadow:0 14px 30px rgba(192,107,126,.4);}
+  .btn-primary:hover{transform:translateY(-3px) scale(1.02); box-shadow:0 18px 36px rgba(192,107,126,.5);}
+  .btn-outline{background:transparent; color:var(--ink); border:1.5px solid var(--ink);}
+  .btn-outline:hover{background:var(--ink); color:#fff; transform:translateY(-3px);}
+  .scroll-cue{
+    position:absolute; bottom:38px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column;
+    align-items:center; gap:8px; opacity:0; z-index:5;
+  }
+  .scroll-cue span{font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--pink-deep);}
+  .mouse{width:24px; height:38px; border:2px solid var(--pink-deep); border-radius:14px; position:relative;}
+  .mouse::before{content:''; position:absolute; top:6px; left:50%; transform:translateX(-50%); width:4px; height:8px; background:var(--pink-deep); border-radius:2px; animation:scrollwheel 1.6s infinite;}
+  @keyframes scrollwheel{ 0%{opacity:1; top:6px;} 70%{opacity:0; top:20px;} 100%{opacity:0; top:6px;} }
+
+  .float{animation:floaty 6s ease-in-out infinite;}
+  @keyframes floaty{ 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-22px) rotate(6deg);} }
+
+  /* SECTION HEADS */
+  .eyebrow{
+    font-size:12.5px; letter-spacing:.25em; text-transform:uppercase; color:var(--pink-deep); font-weight:600;
+    display:flex; align-items:center; gap:10px; margin-bottom:16px; justify-content:center;
+  }
+  .eyebrow::before, .eyebrow::after{content:''; width:30px; height:1px; background:var(--gold);}
+  .section-head{text-align:center; max-width:640px; margin:0 auto 64px;}
+  .section-head h2{font-size:clamp(32px,4.5vw,52px); font-weight:600; line-height:1.15; margin-bottom:18px;}
+  .section-head p{color:#6b5a52; font-size:16.5px; line-height:1.7;}
+
+  section.pad{padding:130px 0;}
+
+  /* ABOUT */
+  #about{background:var(--ivory);}
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:80px; align-items:center;}
+  .about-visual{position:relative; display:flex; align-items:center; justify-content:center; height:460px;}
+  .about-ring{position:absolute; width:380px; height:380px; border:1.5px dashed var(--gold); border-radius:50%; animation:spin 40s linear infinite; pointer-events:none;}
+  .about-photo{
+    width:320px; height:400px; border-radius:20px; overflow:hidden; box-shadow:var(--shadow);
+    border:6px solid #fff; position:relative; z-index:2; transform:rotate(-2deg);
+  }
+  .about-photo img{width:100%; height:100%; object-fit:cover; object-position:center 25%;}
+  .about-badge{
+    position:absolute; bottom:-18px; right:-24px; z-index:3; background:#fff; border-radius:16px;
+    padding:14px 20px; box-shadow:var(--shadow); text-align:center; transform:rotate(4deg);
+  }
+  .about-badge strong{display:block; font-family:'Playfair Display',serif; font-size:22px; color:var(--pink-deep);}
+  .about-badge span{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:#8a7a72;}
+  .about-text .eyebrow{justify-content:flex-start;}
+  .about-text .eyebrow::before{display:none;}
+  .about-text h2{font-size:clamp(30px,4vw,44px); margin-bottom:22px; font-weight:600;}
+  .about-text p{color:#6b5a52; line-height:1.85; font-size:16px; margin-bottom:18px;}
+  .about-stats{display:flex; gap:44px; margin-top:38px;}
+  .stat h3{font-size:38px; color:var(--pink-deep); font-weight:700;}
+  .stat span{font-size:12.5px; text-transform:uppercase; letter-spacing:.1em; color:#8a7a72;}
+
+  /* GALLERY */
+  #gallery{background:linear-gradient(180deg, var(--ivory), var(--cream));}
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:28px;
+  }
+  .gcard{
+    background:#fff; border-radius:22px; text-align:left; box-shadow:var(--shadow);
+    position:relative; overflow:hidden; transition:transform .45s cubic-bezier(.2,.9,.3,1.3);
+    height:380px; display:flex; align-items:flex-end;
+  }
+  .gcard:hover{transform:translateY(-12px) rotate(-1deg);}
+  .gcard .gphoto{position:absolute; inset:0; z-index:0;}
+  .gcard .gphoto img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .gcard:hover .gphoto img{transform:scale(1.08);}
+  .gcard .gphoto::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(44,32,24,0) 30%, rgba(44,32,24,.85) 100%);
+  }
+  .gcard .gbody{position:relative; z-index:1; padding:28px 26px; color:#fff;}
+  .gcard .icon-wrap{
+    width:52px; height:52px; margin-bottom:14px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.92);
+  }
+  .gcard .icon-wrap svg{width:28px; height:28px;}
+  .gcard h3{font-size:21px; margin-bottom:8px; font-weight:600; color:#fff;}
+  .gcard p{color:rgba(255,255,255,.85); font-size:14px; line-height:1.55;}
+  .gcard .tag{
+    position:absolute; top:18px; right:18px; background:var(--gold-light); color:#6b551c; font-size:10.5px;
+    padding:4px 12px; border-radius:20px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; z-index:2;
+  }
+
+  /* PRICING */
+  #portfolio{background:var(--cream); overflow:hidden; padding:100px 0;}
+  .pmarquee{display:flex; gap:24px; width:max-content; animation:scrollx 50s linear infinite;}
+  .pmarquee:hover{animation-play-state:paused;}
+  .pcard-img{
+    width:260px; height:340px; border-radius:20px; overflow:hidden; position:relative; box-shadow:var(--shadow); flex-shrink:0;
+  }
+  .pcard-img img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .pcard-img:hover img{transform:scale(1.08);}
+  .pcard-img .cap{
+    position:absolute; left:0; right:0; bottom:0; padding:20px 18px 16px;
+    background:linear-gradient(180deg, rgba(44,32,24,0), rgba(44,32,24,.82));
+    color:#fff; font-size:13.5px; font-weight:600; letter-spacing:.02em;
+  }
+  #pricing{background:var(--ivory);}
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; align-items:stretch;}
+  .pcard{
+    background:#fff; border-radius:28px; padding:46px 34px; box-shadow:var(--shadow); position:relative;
+    border:1px solid rgba(200,150,160,.15); display:flex; flex-direction:column; transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .pcard:hover{transform:translateY(-10px); box-shadow:0 30px 70px rgba(76,42,54,0.22);}
+  .pcard.featured{background:linear-gradient(160deg,#fff, var(--blush)); border:1.5px solid var(--pink-deep); transform:scale(1.05);}
+  .pcard.featured:hover{transform:scale(1.05) translateY(-10px);}
+  .pcard .badge{
+    position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--pink-deep); color:#fff;
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase; padding:7px 18px; border-radius:20px; font-weight:600;
+    box-shadow:0 8px 18px rgba(192,107,126,.4);
+  }
+  .pcard h3{font-size:24px; font-weight:600; margin-bottom:6px;}
+  .pcard .serves{color:#8a7a72; font-size:13.5px; margin-bottom:22px;}
+  .pcard .price{font-family:'Playfair Display',serif; font-size:46px; font-weight:700; color:var(--pink-deep); margin-bottom:4px;}
+  .pcard .price sup{font-size:18px; top:-18px;}
+  .pcard .price small{font-size:14px; color:#8a7a72; font-weight:400; font-family:'Poppins',sans-serif;}
+  .pcard .deposit-line{font-size:13px; color:#6b551c; background:var(--gold-light); display:inline-block; padding:6px 14px; border-radius:14px; margin-bottom:24px;}
+  .pcard ul{margin-bottom:30px; flex:1;}
+  .pcard ul li{font-size:14.5px; color:#5a4a42; padding:9px 0; border-bottom:1px dashed #eee0d8; display:flex; gap:10px; align-items:flex-start;}
+  .pcard ul li svg{width:16px; height:16px; flex-shrink:0; margin-top:3px; color:var(--pink-deep);}
+  .pcard .btn{width:100%; justify-content:center;}
+  .price-note{text-align:center; color:#8a7a72; font-size:13.5px; margin-top:40px; font-style:italic;}
+
+  /* ORDER FORM */
+  #order{background:linear-gradient(180deg, var(--cream), var(--blush) 45%, var(--ivory));}
+  .order-wrap{
+    background:#fff; border-radius:32px; box-shadow:0 40px 90px rgba(76,42,54,.18); overflow:hidden;
+    display:grid; grid-template-columns:1.3fr 1fr;
+  }
+  .order-form{padding:56px 54px;}
+  .order-summary{
+    background:linear-gradient(165deg, var(--ink), #3a281f); color:#fff; padding:56px 40px; position:relative; overflow:hidden;
+  }
+  .order-summary::before{
+    content:''; position:absolute; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(232,180,188,.25), transparent 70%);
+    top:-80px; right:-80px;
+  }
+  .step-title{font-size:12.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--pink-deep); font-weight:700; margin-bottom:8px;}
+  .order-form h2{font-size:30px; font-weight:600; margin-bottom:28px;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-size:13px; font-weight:600; margin-bottom:8px; color:#5a4a42;}
+  .field input, .field select, .field textarea{
+    width:100%; padding:14px 16px; border:1.5px solid #ecdfd6; border-radius:12px; font-family:'Poppins',sans-serif;
+    font-size:14.5px; background:var(--ivory); transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none; border-color:var(--pink-deep); box-shadow:0 0 0 4px rgba(216,138,154,.15);
+  }
+  .field textarea{resize:vertical; min-height:100px;}
+
+  .size-options{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px;}
+  .size-opt{
+    border:1.5px solid #ecdfd6; border-radius:16px; padding:18px 14px; text-align:center; cursor:pointer; transition:all .25s ease; position:relative;
+  }
+  .size-opt:hover{border-color:var(--pink-deep); transform:translateY(-3px);}
+  .size-opt.active{border-color:var(--pink-deep); background:var(--blush); box-shadow:0 10px 24px rgba(216,138,154,.25);}
+  .size-opt h4{font-size:15px; margin-bottom:4px;}
+  .size-opt .s-serves{font-size:11.5px; color:#8a7a72; margin-bottom:8px;}
+  .size-opt .s-price{font-family:'Playfair Display',serif; font-weight:700; font-size:20px; color:var(--pink-deep);}
+  .size-opt input{position:absolute; opacity:0;}
+
+  /* Calendar */
+  .cal-wrap{border:1.5px solid #ecdfd6; border-radius:16px; padding:20px 22px; background:var(--ivory);}
+  .cal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+  .cal-head button{
+    width:32px; height:32px; border-radius:50%; border:1.5px solid #ecdfd6; background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:all .2s ease;
+  }
+  .cal-head button:hover{background:var(--pink-deep); border-color:var(--pink-deep); color:#fff;}
+  .cal-head h4{font-size:15.5px; font-weight:600;}
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; text-align:center;}
+  .cal-grid .dow{font-size:10.5px; color:#8a7a72; font-weight:600; padding-bottom:6px;}
+  .cal-day{
+    aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:10px; font-size:13px;
+    cursor:pointer; transition:all .2s ease; color:var(--ink);
+  }
+  .cal-day.disabled{color:#d8cfc8; cursor:not-allowed; text-decoration:line-through;}
+  .cal-day.empty{visibility:hidden;}
+  .cal-day.available:hover{background:var(--blush);}
+  .cal-day.selected{background:var(--pink-deep); color:#fff; font-weight:700; transform:scale(1.1);}
+  .cal-day.today{border:1.5px solid var(--gold);}
+  .cal-note{display:flex; align-items:center; gap:8px; font-size:12px; color:#8a7a72; margin-top:14px;}
+  .cal-note .dot{width:8px; height:8px; border-radius:50%; background:var(--blush-deep); display:inline-block;}
+  #selectedDateLabel{font-size:13.5px; margin-top:14px; color:var(--pink-deep); font-weight:600; min-height:18px;}
+
+  .summary-row{display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:14.5px;}
+  .summary-row.total{font-size:19px; font-weight:700; border-bottom:none; padding-top:20px; color:var(--gold-light);}
+  .summary-row span:last-child{font-weight:600;}
+  .summary-empty{color:rgba(255,255,255,.55); font-size:14px; line-height:1.7; margin-top:14px;}
+  .order-summary h3{font-size:22px; margin-bottom:6px; font-weight:600;}
+  .order-summary .sub{color:rgba(255,255,255,.6); font-size:13.5px; margin-bottom:28px;}
+  .deposit-highlight{
+    background:rgba(232,180,188,.15); border:1px solid rgba(232,180,188,.3); border-radius:16px; padding:18px 20px; margin-top:22px;
+  }
+  .submit-btn{width:100%; justify-content:center; margin-top:26px; font-size:15px; padding:18px;}
+  .form-note{font-size:12px; color:rgba(255,255,255,.5); margin-top:16px; line-height:1.6;}
+
+  #successMsg{
+    display:none; text-align:center; padding:60px 40px;
+  }
+  #successMsg svg{width:80px; height:80px; margin:0 auto 24px;}
+  #successMsg h3{font-size:26px; margin-bottom:12px;}
+  #successMsg p{color:#6b5a52; max-width:420px; margin:0 auto; line-height:1.7;}
+
+  /* TESTIMONIALS */
+  #reviews{background:var(--cream); overflow:hidden;}
+  .marquee{display:flex; gap:28px; width:max-content; animation:scrollx 34s linear infinite;}
+  .marquee:hover{animation-play-state:paused;}
+  @keyframes scrollx{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .review-card{
+    width:340px; background:#fff; border-radius:20px; padding:30px; box-shadow:var(--shadow); flex-shrink:0;
+  }
+  .stars{color:var(--gold); font-size:15px; margin-bottom:12px; letter-spacing:2px;}
+  .review-card p{font-size:14.5px; color:#5a4a42; line-height:1.7; margin-bottom:18px; font-style:italic;}
+  .reviewer{display:flex; align-items:center; gap:12px;}
+  .reviewer .av{width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--pink),var(--gold-light)); flex-shrink:0;}
+  .reviewer h5{font-size:14px; font-weight:600;}
+  .reviewer span{font-size:12px; color:#8a7a72;}
+
+  /* CONTACT / FOOTER */
+  #contact{
+    background:linear-gradient(180deg, var(--ivory), var(--blush)); text-align:center;
+  }
+  .contact-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; max-width:900px; margin:0 auto;}
+  .ccard{background:#fff; padding:34px 24px; border-radius:20px; box-shadow:var(--shadow);}
+  .ccard .icon-wrap{width:64px; height:64px; margin:0 auto 16px; border-radius:50%; background:var(--blush); display:flex; align-items:center; justify-content:center;}
+  .ccard .icon-wrap svg{width:30px; height:30px; color:var(--pink-deep);}
+  .ccard h4{font-size:15px; margin-bottom:6px;}
+  .ccard p, .ccard a{font-size:14px; color:#6b5a52;}
+
+  footer{background:var(--ink); color:rgba(255,255,255,.7); padding:60px 0 30px;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.1);}
+  .footer-brand .logo{color:var(--gold-light);}
+  .footer-brand p{max-width:280px; margin-top:14px; font-size:13.5px; line-height:1.7;}
+  .footer-col h5{color:#fff; font-size:14px; margin-bottom:16px; letter-spacing:.05em; text-transform:uppercase;}
+  .footer-col a{display:block; font-size:13.5px; margin-bottom:10px; color:rgba(255,255,255,.65); transition:color .2s;}
+  .footer-col a:hover{color:var(--gold-light);}
+  .footer-bottom{display:flex; justify-content:space-between; padding-top:26px; font-size:12.5px; flex-wrap:wrap; gap:10px;}
+  .social{display:flex; gap:14px;}
+  .social a{width:38px; height:38px; border-radius:50%; border:1px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center;}
+  .social a:hover{background:var(--pink-deep); border-color:var(--pink-deep);}
+  .social svg{width:17px; height:17px;}
+
+  .placeholder-flag{
+    display:inline-block; background:#fff3cd; color:#7a5c00; font-size:10.5px; padding:2px 8px; border-radius:6px; margin-left:6px; font-weight:600; vertical-align:middle;
+  }
+
+  [data-animate]{opacity:0;}
+
+  @media (max-width: 980px){
+    .about-grid{grid-template-columns:1fr; gap:50px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .price-grid{grid-template-columns:1fr; max-width:440px; margin:0 auto;}
+    .pcard.featured{transform:scale(1);}
+    .order-wrap{grid-template-columns:1fr;}
+    .contact-cards{grid-template-columns:1fr;}
+  }
+  @media (max-width: 720px){
+    .nav-links{position:fixed; top:0; right:-100%; width:78%; height:100vh; background:var(--ivory); flex-direction:column; justify-content:center; transition:right .4s ease; box-shadow:-10px 0 40px rgba(0,0,0,.1);}
+    .nav-links.open{right:0;}
+    .burger{display:flex;}
+    .gallery-grid{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+    .size-options{grid-template-columns:1fr;}
+    .order-form{padding:38px 24px;}
+    .order-summary{padding:38px 24px;}
+    section.pad{padding:90px 0;}
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <svg class="loader-cake" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="28" stroke="#d88a9a" stroke-width="4" stroke-dasharray="140 60" stroke-linecap="round"/>
+  </svg>
+  <p>Nickey Sweets</p>
+</div>
+
+<header id="siteHeader">
+  <div class="container">
+    <nav>
+      <a href="#hero" class="logo">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M8 30c0-3 2-4 4-4h24c2 0 4 1 4 4v10a2 2 0 01-2 2H10a2 2 0 01-2-2V30z" fill="#e8b4bc"/><path d="M12 26c0-6 5-10 12-10s12 4 12 10" stroke="#c06b7e" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="10" r="3" fill="#c9a24b"/><path d="M24 13v4" stroke="#c9a24b" stroke-width="2" stroke-linecap="round"/></svg>
+        Nickey Sweets
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#gallery">Specialties</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#order" class="nav-cta">Order a Cake</a></li>
+      </ul>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
+    </nav>
+  </div>
+</header>
+
+<section id="hero">
+  <div class="hero-bg"><img src="assets/IMG_3837.jpg" alt="Custom elegant cake by Nickey Sweets" loading="eager"></div>
+  <svg class="decor float" style="top:12%; left:6%; width:90px; opacity:.7; animation-delay:0s" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#e8b4bc" opacity=".5"/></svg>
+  <svg class="decor float" style="top:65%; left:10%; width:50px; animation-delay:1.2s" viewBox="0 0 100 100"><path d="M50 5 L61 38 L95 38 L68 59 L79 92 L50 71 L21 92 L32 59 L5 38 L39 38 Z" fill="#c9a24b" opacity=".55"/></svg>
+  <svg class="decor float" style="top:20%; right:8%; width:70px; animation-delay:.6s" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#a97cb0" opacity=".35"/></svg>
+  <svg class="decor float" style="bottom:15%; right:12%; width:55px; animation-delay:2s" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#8fc1d9" opacity=".4"/></svg>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Custom Cakes &amp; Desserts, Made With Love</div>
+    <h1>Every Cake Tells<br><em>a Sweet Story</em></h1>
+    <p class="hero-sub">Nickey Sweets creates custom celebration cakes, cupcakes, and desserts for weddings, birthdays, baby showers, and every milestone worth savoring.</p>
+    <div class="hero-btns">
+      <a href="#order" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Design Your Custom Cake
+      </a>
+      <a href="#gallery" class="btn btn-outline">View Specialties</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="mouse"></div></div>
+</section>
+
+<section id="about" class="pad">
+  <div class="container about-grid">
+    <div class="about-visual" data-animate="fade-right">
+      <div class="about-ring"></div>
+      <div class="about-photo">
+        <img src="assets/IMG_3827.jpg" alt="Dessert spread with custom cake by Nickey Sweets" loading="lazy">
+      </div>
+      <div class="about-badge float">
+        <strong>5★</strong>
+        <span>Client Rated</span>
+      </div>
+    </div>
+    <div class="about-text" data-animate="fade-left">
+      <div class="eyebrow">Meet the Baker</div>
+      <h2>Hi, I'm Nickcol — <br>welcome to my kitchen.</h2>
+      <p>Nickey Sweets started as a labor of love: baking for family and friends, then for their friends, and soon for an entire community that kept asking for more. Every order — from a dozen themed cupcakes to a three-tier wedding cake — is baked fresh, decorated by hand, and made to feel personal.</p>
+      <p>"Blessed to make desserts, all are made with love." That's more than our motto — it's the whole philosophy behind every cake that leaves this kitchen. Have a wild idea or a specific vision? DM us or use the form below — we love bringing custom concepts to life.</p>
+      <div class="about-stats">
+        <div class="stat"><h3 class="count" data-count="500">0</h3><span>Desserts Made</span></div>
+        <div class="stat"><h3 class="count" data-count="100">0</h3><span>Happy Clients</span></div>
+        <div class="stat"><h3 class="count" data-count="5">0</h3><span>Years Baking</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="pad">
+  <div class="container">
+    <div class="section-head" data-animate="fade-up">
+      <div class="eyebrow">What We Bake</div>
+      <h2>Our Sweetest Specialties</h2>
+      <p>From elegant tiered wedding cakes to playful themed birthday creations — every dessert is designed around your celebration.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gcard" data-animate="fade-up">
+        <span class="tag">Most Requested</span>
+        <div class="gphoto"><img src="assets/IMG_3837.jpg" alt="Elegant naked cake with sugar florals" loading="lazy"></div>
+        <div class="gbody">
+          <div class="icon-wrap"><svg viewBox="0 0 64 64" fill="none"><rect x="12" y="34" width="40" height="20" rx="4" fill="none" stroke="#c06b7e" stroke-width="2.5"/><rect x="18" y="18" width="28" height="18" rx="4" fill="none" stroke="#c06b7e" stroke-width="2.5"/><circle cx="32" cy="10" r="3" fill="#c9a24b"/></svg></div>
+          <h3>Wedding &amp; Elegant Tiers</h3>
+          <p>Multi-tier cakes finished with fresh florals, lace piping, and refined buttercream or fondant detailing.</p>
+        </div>
+      </div>
+      <div class="gcard" data-animate="fade-up">
+        <div class="gphoto"><img src="assets/IMG_3833.jpg" alt="Custom themed birthday cake" loading="lazy"></div>
+        <div class="gbody">
+          <div class="icon-wrap"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="34" r="18" fill="none" stroke="#c06b7e" stroke-width="2.5"/><path d="M32 34 L32 16" stroke="#c9a24b" stroke-width="2.5" stroke-linecap="round"/><circle cx="32" cy="13" r="4" fill="#d88a9a"/></svg></div>
+          <h3>Birthday &amp; Themed Cakes</h3>
+          <p>Favorite characters, movies, and colors — fully personalized to the guest of honor.</p>
+        </div>
+      </div>
+      <div class="gcard" data-animate="fade-up">
+        <div class="gphoto"><img src="assets/IMG_3830.jpg" alt="Baby shower cake with teddy bear topper" loading="lazy"></div>
+        <div class="gbody">
+          <div class="icon-wrap"><svg viewBox="0 0 64 64" fill="none"><path d="M20 40 h24 v10 a2 2 0 01-2 2 H22 a2 2 0 01-2-2 Z" fill="none" stroke="#c06b7e" stroke-width="2.5"/><path d="M20 40 q12 -18 24 0" fill="none" stroke="#c06b7e" stroke-width="2.5"/></svg></div>
+          <h3>Baby Showers &amp; Gender Reveals</h3>
+          <p>Soft palettes, delicate toppers, and coordinated cupcakes to celebrate new arrivals.</p>
+        </div>
+      </div>
+      <div class="gcard" data-animate="fade-up">
+        <span class="tag">Fan Favorite</span>
+        <div class="gphoto"><img src="assets/IMG_3840.jpg" alt="Custom character cake" loading="lazy"></div>
+        <div class="gbody">
+          <div class="icon-wrap"><svg viewBox="0 0 64 64" fill="none"><circle cx="24" cy="38" r="12" fill="none" stroke="#c06b7e" stroke-width="2.5"/><circle cx="44" cy="30" r="12" fill="none" stroke="#c06b7e" stroke-width="2.5"/><path d="M24 26 v-8 M44 18 v-8" stroke="#c9a24b" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+          <h3>Custom Character Cakes</h3>
+          <p>Kid-favorite characters brought to life in buttercream and fondant, made to spec.</p>
+        </div>
+      </div>
+      <div class="gcard" data-animate="fade-up">
+        <div class="gphoto"><img src="assets/IMG_3838.jpg" alt="Elegant black and gold milestone birthday cake" loading="lazy"></div>
+        <div class="gbody">
+          <div class="icon-wrap"><svg viewBox="0 0 64 64" fill="none"><path d="M32 12 C40 22 46 28 46 38 a14 14 0 01-28 0 c0-10 6-16 14-26z" fill="none" stroke="#c06b7e" stroke-width="2.5"/></svg></div>
+          <h3>Milestone Celebrations</h3>
+          <p>Sophisticated designs for 21sts, anniversaries, and other milestones worth marking.</p>
+        </div>
+      </div>
+      <div class="gcard" data-animate="fade-up">
+        <span class="tag">Fully Custom</span>
+        <div class="gphoto"><img src="assets/IMG_3836.jpg" alt="Two-tier cake with matching cupcakes" loading="lazy"></div>
+        <div class="gbody">
+          <div class="icon-wrap"><svg viewBox="0 0 64 64" fill="none"><path d="M14 30 l6-14 6 14 6-14 6 14 6-14 6 14" stroke="#c06b7e" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="12" y="30" width="40" height="22" rx="4" fill="none" stroke="#c06b7e" stroke-width="2.5"/></svg></div>
+          <h3>Dessert Tables &amp; Cupcakes</h3>
+          <p>Full spreads and coordinated treats — perfect for showers, receptions, and parties.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-head" data-animate="fade-up">
+    <div class="eyebrow">More Sweet Work</div>
+    <h2>Recent Custom Creations</h2>
+    <p>A closer look at cakes we've baked for real clients &mdash; hover to pause and take it all in.</p>
+  </div>
+  <div class="pmarquee">
+    <div class="pcard-img"><img src="assets/IMG_3828.jpg" alt="Two-tier princess birthday cake" loading="lazy"><div class="cap">Princess Birthday, Two-Tier</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3832.jpg" alt="Colorful princess castle birthday cake" loading="lazy"><div class="cap">Princess Castle Birthday</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3839.jpg" alt="Dinosaur themed first birthday number cake" loading="lazy"><div class="cap">Dino-Themed First Birthday</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3835.jpg" alt="Purple themed character birthday cake" loading="lazy"><div class="cap">Character Birthday Cake</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3834.jpg" alt="Strawberry themed birthday cake" loading="lazy"><div class="cap">Retro Strawberry Theme</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3831.jpg" alt="Gold crown topped princess birthday cake" loading="lazy"><div class="cap">Crown Topper Detail</div></div>
+    <!-- duplicate set for seamless loop -->
+    <div class="pcard-img"><img src="assets/IMG_3828.jpg" alt="Two-tier princess birthday cake" loading="lazy"><div class="cap">Princess Birthday, Two-Tier</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3832.jpg" alt="Colorful princess castle birthday cake" loading="lazy"><div class="cap">Princess Castle Birthday</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3839.jpg" alt="Dinosaur themed first birthday number cake" loading="lazy"><div class="cap">Dino-Themed First Birthday</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3835.jpg" alt="Purple themed character birthday cake" loading="lazy"><div class="cap">Character Birthday Cake</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3834.jpg" alt="Strawberry themed birthday cake" loading="lazy"><div class="cap">Retro Strawberry Theme</div></div>
+    <div class="pcard-img"><img src="assets/IMG_3831.jpg" alt="Gold crown topped princess birthday cake" loading="lazy"><div class="cap">Crown Topper Detail</div></div>
+  </div>
+</section>
+
+<section id="pricing" class="pad">
+  <div class="container">
+    <div class="section-head" data-animate="fade-up">
+      <div class="eyebrow">Custom Cake Pricing</div>
+      <h2>Simple Sizes, Transparent Pricing</h2>
+      <p>Pricing below reflects our starting rate for a fully custom cake. Final pricing depends on design complexity, flavors, and decorative detail — confirmed with you before your deposit is due.</p>
+    </div>
+    <div class="price-grid">
+      <div class="pcard" data-animate="fade-up">
+        <h3>Sweetheart</h3>
+        <div class="serves">6" round &middot; serves 8&ndash;10</div>
+        <div class="price"><sup>$</sup>85<small> starting</small></div>
+        <div class="deposit-line">50% deposit &middot; $42.50 to book</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Buttercream finish, one flavor</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Custom color palette</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Simple topper or piping detail</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Great for small gatherings</li>
+        </ul>
+        <a href="#order" class="btn btn-outline" onclick="selectSizeFromCard('small')">Choose Sweetheart</a>
+      </div>
+      <div class="pcard featured" data-animate="fade-up">
+        <span class="badge">Most Popular</span>
+        <h3>Celebration</h3>
+        <div class="serves">8" round &middot; serves 15&ndash;20</div>
+        <div class="price"><sup>$</sup>160<small> starting</small></div>
+        <div class="deposit-line">50% deposit &middot; $80.00 to book</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Buttercream or fondant finish</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Two flavors + filling of choice</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Custom theme, florals, or lettering</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Ideal for birthdays &amp; showers</li>
+        </ul>
+        <a href="#order" class="btn btn-primary" onclick="selectSizeFromCard('medium')">Choose Celebration</a>
+      </div>
+      <div class="pcard" data-animate="fade-up">
+        <h3>Grand Tier</h3>
+        <div class="serves">Two-tier (8"+6") &middot; serves 30&ndash;35</div>
+        <div class="price"><sup>$</sup>295<small> starting</small></div>
+        <div class="deposit-line">50% deposit &middot; $147.50 to book</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Full custom sculpting &amp; detail</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Fresh or sugar florals available</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Up to 3 flavors across tiers</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Perfect for weddings &amp; milestones</li>
+        </ul>
+        <a href="#order" class="btn btn-outline" onclick="selectSizeFromCard('large')">Choose Grand Tier</a>
+      </div>
+    </div>
+    <p class="price-note">A 50% non-refundable deposit secures your date; the remaining balance is due before pickup or delivery.</p>
+  </div>
+</section>
+
+<section id="order" class="pad">
+  <div class="container">
+    <div class="section-head" data-animate="fade-up">
+      <div class="eyebrow">Let's Get Baking</div>
+      <h2>Request Your Custom Cake</h2>
+      <p>Tell us your vision below. We'll confirm final pricing and collect your deposit to lock in your date.</p>
+    </div>
+
+    <div class="order-wrap" data-animate="fade-up">
+      <form class="order-form" id="orderForm">
+        <div class="step-title">Step 1</div>
+        <h2>Your Details &amp; Cake</h2>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fname">Full Name</label>
+            <input type="text" id="fname" required placeholder="Jane Doe">
+          </div>
+          <div class="field">
+            <label for="femail">Email</label>
+            <input type="email" id="femail" required placeholder="jane@email.com">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="fphone">Phone</label>
+            <input type="tel" id="fphone" required placeholder="(555) 123-4567">
+          </div>
+          <div class="field">
+            <label for="foccasion">Occasion</label>
+            <select id="foccasion">
+              <option>Birthday</option>
+              <option>Wedding</option>
+              <option>Baby Shower / Gender Reveal</option>
+              <option>Graduation</option>
+              <option>Anniversary</option>
+              <option>Corporate Event</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <label style="display:block; font-size:13px; font-weight:600; margin-bottom:10px; color:#5a4a42;">Choose Your Cake Size</label>
+        <div class="size-options">
+          <label class="size-opt" data-size="small">
+            <input type="radio" name="size" value="small">
+            <h4>Sweetheart</h4>
+            <div class="s-serves">Serves 8&ndash;10</div>
+            <div class="s-price">$85</div>
+          </label>
+          <label class="size-opt active" data-size="medium">
+            <input type="radio" name="size" value="medium" checked>
+            <h4>Celebration</h4>
+            <div class="s-serves">Serves 15&ndash;20</div>
+            <div class="s-price">$160</div>
+          </label>
+          <label class="size-opt" data-size="large">
+            <input type="radio" name="size" value="large">
+            <h4>Grand Tier</h4>
+            <div class="s-serves">Serves 30&ndash;35</div>
+            <div class="s-price">$295</div>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fflavor">Flavor / Filling</label>
+            <select id="fflavor">
+              <option>Vanilla Bean</option>
+              <option>Chocolate Fudge</option>
+              <option>Red Velvet</option>
+              <option>Lemon Raspberry</option>
+              <option>Strawberry</option>
+              <option>Funfetti</option>
+              <option>Other (describe below)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fdelivery">Pickup or Delivery</label>
+            <select id="fdelivery">
+              <option>Pickup</option>
+              <option>Local Delivery (fee quoted separately)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="fdesign">Describe Your Design Vision</label>
+          <textarea id="fdesign" placeholder="Colors, theme, inspiration photos/links, dietary restrictions, etc."></textarea>
+        </div>
+
+        <div class="step-title" style="margin-top:8px;">Step 2</div>
+        <h2 style="font-size:22px; margin-bottom:18px;">Pick Your Date</h2>
+        <p style="font-size:13px; color:#8a7a72; margin-bottom:16px;">We require at least 7 days' notice to prepare your custom order. Unavailable dates are grayed out below.</p>
+
+        <div class="cal-wrap">
+          <div class="cal-head">
+            <button type="button" id="prevMonth" aria-label="Previous month">&#8249;</button>
+            <h4 id="calMonthLabel"></h4>
+            <button type="button" id="nextMonth" aria-label="Next month">&#8250;</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-note"><span class="dot"></span> Dates within 7 days are unavailable for new custom orders</div>
+          <div id="selectedDateLabel">No date selected yet</div>
+        </div>
+
+        <div class="field" style="margin-top:22px;">
+          <label for="fnotes">Anything else we should know?</label>
+          <textarea id="fnotes" placeholder="Allergies, delivery address, event time, etc."></textarea>
+        </div>
+      </form>
+
+      <div class="order-summary" id="orderSummaryPanel">
+        <h3>Order Summary</h3>
+        <div class="sub">Review before you submit</div>
+
+        <div class="summary-row"><span>Cake</span><span id="sumSize">Celebration (8", serves 15–20)</span></div>
+        <div class="summary-row"><span>Occasion</span><span id="sumOccasion">Birthday</span></div>
+        <div class="summary-row"><span>Pickup/Delivery</span><span id="sumDelivery">Pickup</span></div>
+        <div class="summary-row"><span>Date Requested</span><span id="sumDate">—</span></div>
+        <div class="summary-row"><span>Starting Price</span><span id="sumPrice">$160.00</span></div>
+        <div class="summary-row total"><span>Deposit Due Today</span><span id="sumDeposit">$80.00</span></div>
+
+        <div class="deposit-highlight">
+          <strong style="font-size:13.5px;">50% Deposit Policy</strong>
+          <p style="font-size:12.5px; color:rgba(255,255,255,.65); margin-top:8px; line-height:1.6;">A 50% deposit secures your date and is non-refundable. The remaining balance is due before pickup or delivery. Final total may adjust slightly based on design complexity — we'll confirm before charging your deposit.</p>
+        </div>
+
+        <button type="button" class="btn btn-primary submit-btn" id="submitOrderBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Submit Custom Cake Request
+        </button>
+        <p class="form-note">This is a request, not a payment — real deposit checkout (Stripe) will be connected before launch. Submitting opens an email to Nickey Sweets with your full order details so we can confirm and collect your deposit.<span class="placeholder-flag">DRAFT</span></p>
+      </div>
+    </div>
+
+    <div id="successMsg" class="container">
+      <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="#f7e3e6"/><path d="M20 33l8 8 16-18" stroke="#c06b7e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <h3>Request Ready to Send!</h3>
+      <p>Your email app should now be open with your order details addressed to Nickey Sweets. Send it over and we'll follow up within 24–48 hours to confirm details and collect your 50% deposit.</p>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="pad">
+  <div class="section-head" data-animate="fade-up">
+    <div class="eyebrow">Sweet Words</div>
+    <h2>What Clients Are Saying</h2>
+  </div>
+  <div class="marquee" id="marquee">
+    <div class="review-card"><div class="stars">★★★★★</div><p>"Our wedding cake was more beautiful than I imagined — and it tasted even better. Nickey Sweets made our day so special."</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Wedding Client</span></div></div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>"The custom birthday cake was an exact match to the photo I sent. My daughter's face said it all!"</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Birthday Client</span></div></div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>"Ordering was so easy and the communication was amazing. Highly recommend for any celebration."</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Baby Shower Client</span></div></div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>"The cupcakes were the hit of our office party — beautifully decorated and delicious."</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Corporate Client</span></div></div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>"Our wedding cake was more beautiful than I imagined — and it tasted even better. Nickey Sweets made our day so special."</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Wedding Client</span></div></div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>"The custom birthday cake was an exact match to the photo I sent. My daughter's face said it all!"</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Birthday Client</span></div></div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>"Ordering was so easy and the communication was amazing. Highly recommend for any celebration."</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Baby Shower Client</span></div></div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>"The cupcakes were the hit of our office party — beautifully decorated and delicious."</p><div class="reviewer"><div class="av"></div><div><h5>Placeholder Review</h5><span>Corporate Client</span></div></div></div>
+  </div>
+  <p style="text-align:center; font-size:12px; color:#8a7a72; margin-top:20px;">Sample reviews shown for layout — swap in real client testimonials before launch.<span class="placeholder-flag">DRAFT</span></p>
+</section>
+
+<section id="contact" class="pad">
+  <div class="container">
+    <div class="section-head" data-animate="fade-up">
+      <div class="eyebrow">Get In Touch</div>
+      <h2>Questions? Let's Chat.</h2>
+      <p>DM us on Instagram or reach out directly — we're happy to help with pricing, ideas, or custom requests.</p>
+    </div>
+    <div class="contact-cards" data-animate="fade-up">
+      <div class="ccard">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <h4>Call or Text</h4>
+        <p><a href="tel:3233359154">(323) 335-9154</a></p>
+      </div>
+      <div class="ccard">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+        <h4>Email</h4>
+        <p><a href="mailto:nickcolbautista8@gmail.com">nickcolbautista8@gmail.com</a></p>
+      </div>
+      <div class="ccard">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>
+        <h4>Instagram</h4>
+        <p><a href="https://www.instagram.com/nickey.sweets" target="_blank" rel="noopener">@nickey.sweets</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" class="logo">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M8 30c0-3 2-4 4-4h24c2 0 4 1 4 4v10a2 2 0 01-2 2H10a2 2 0 01-2-2V30z" fill="#e8b4bc"/><path d="M12 26c0-6 5-10 12-10s12 4 12 10" stroke="#e6cd8f" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="10" r="3" fill="#c9a24b"/></svg>
+          Nickey Sweets
+        </a>
+        <p>Custom cakes and desserts, made with love, for every milestone worth celebrating. Serving the greater Los Angeles area <span class="placeholder-flag">confirm area</span>.</p>
+        <div class="social" style="margin-top:20px;">
+          <a href="https://www.instagram.com/nickey.sweets" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="#about">Our Story</a>
+        <a href="#gallery">Specialties</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#order">Order a Cake</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:3233359154">(323) 335-9154</a>
+        <a href="mailto:nickcolbautista8@gmail.com">nickcolbautista8@gmail.com</a>
+        <a href="https://www.instagram.com/nickey.sweets" target="_blank" rel="noopener">@nickey.sweets</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Nickey Sweets. All rights reserved.</span>
+      <span>Website draft prepared for internal review — not yet live.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Loader */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hide'), 500);
+});
+
+/* Header scroll state */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* Mobile nav */
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+/* ---------- GSAP ANIMATIONS ---------- */
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.timeline({delay:.3})
+  .to('.hero-eyebrow', {opacity:1, y:0, duration:.8, ease:'power2.out'}, 0)
+  .fromTo('#hero h1', {opacity:0, y:40}, {opacity:1, y:0, duration:1, ease:'power3.out'}, .15)
+  .to('.hero-sub', {opacity:1, y:0, duration:.9, ease:'power2.out'}, .5)
+  .to('.hero-btns', {opacity:1, y:0, duration:.9, ease:'power2.out'}, .7)
+  .to('.scroll-cue', {opacity:1, duration:.8}, 1);
+
+gsap.fromTo('.hero-eyebrow', {y:20}, {y:0, duration:0});
+gsap.fromTo('.hero-sub', {y:20}, {y:0, duration:0});
+gsap.fromTo('.hero-btns', {y:20}, {y:0, duration:0});
+
+/* hero background photo parallax */
+gsap.to('.hero-bg img', {
+  y: 60, scale:1.08, scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:1 }
+});
+
+/* hero parallax blobs */
+gsap.utils.toArray('#hero .decor').forEach((el, i) => {
+  gsap.to(el, {
+    y: (i % 2 === 0 ? -80 : 80),
+    scrollTrigger: { trigger:'#hero', start:'top top', end:'bottom top', scrub:1 }
+  });
+});
+
+/* generic reveal animations */
+const fadeUps = gsap.utils.toArray('[data-animate="fade-up"]');
+fadeUps.forEach(el => {
+  gsap.fromTo(el, {opacity:0, y:60}, {
+    opacity:1, y:0, duration:1, ease:'power3.out',
+    scrollTrigger:{ trigger:el, start:'top 88%' }
+  });
+});
+gsap.utils.toArray('[data-animate="fade-right"]').forEach(el => {
+  gsap.fromTo(el, {opacity:0, x:-60}, {opacity:1, x:0, duration:1, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 80%'}});
+});
+gsap.utils.toArray('[data-animate="fade-left"]').forEach(el => {
+  gsap.fromTo(el, {opacity:0, x:60}, {opacity:1, x:0, duration:1, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 80%'}});
+});
+
+/* stagger cards */
+gsap.utils.toArray('.gallery-grid .gcard').forEach((card, i) => {
+  gsap.fromTo(card, {opacity:0, y:70, rotate:-2}, {
+    opacity:1, y:0, rotate:0, duration:.9, ease:'back.out(1.4)', delay:i*0.08,
+    scrollTrigger:{ trigger:'.gallery-grid', start:'top 82%' }
+  });
+});
+gsap.utils.toArray('.price-grid .pcard').forEach((card, i) => {
+  gsap.fromTo(card, {opacity:0, y:70}, {
+    opacity:1, y:0, duration:.9, ease:'power3.out', delay:i*0.12,
+    scrollTrigger:{ trigger:'.price-grid', start:'top 82%' }
+  });
+});
+
+/* count up stats */
+gsap.utils.toArray('.count').forEach(el => {
+  const target = +el.dataset.count;
+  ScrollTrigger.create({
+    trigger: el, start:'top 90%', once:true,
+    onEnter: () => {
+      let obj = {val:0};
+      gsap.to(obj, {
+        val: target, duration:1.6, ease:'power2.out',
+        onUpdate: () => el.textContent = Math.floor(obj.val) + (target===5 ? '' : '+')
+      });
+    }
+  });
+});
+
+/* about ring rotates faster on scroll */
+gsap.to('.about-ring', { rotate:360, scrollTrigger:{trigger:'#about', start:'top bottom', end:'bottom top', scrub:2}});
+
+/* background section color shift using scroll */
+gsap.to('body', {
+  scrollTrigger:{
+    trigger:'#order', start:'top bottom', end:'bottom top', scrub:true
+  }
+});
+
+/* ---------- PRICING DATA ---------- */
+const CAKE_PRICES = {
+  small:  { label:'Sweetheart (6", serves 8–10)', price:85 },
+  medium: { label:'Celebration (8", serves 15–20)', price:160 },
+  large:  { label:'Grand Tier (two-tier, serves 30–35)', price:295 }
+};
+
+function selectSizeFromCard(size){
+  const radio = document.querySelector('.size-opt[data-size="'+size+'"] input');
+  if(radio){ radio.checked = true; updateSizeUI(); updateSummary(); }
+}
+window.selectSizeFromCard = selectSizeFromCard;
+
+const sizeOpts = document.querySelectorAll('.size-opt');
+sizeOpts.forEach(opt => {
+  opt.addEventListener('click', () => {
+    opt.querySelector('input').checked = true;
+    updateSizeUI();
+    updateSummary();
+  });
+});
+function updateSizeUI(){
+  sizeOpts.forEach(o => o.classList.toggle('active', o.querySelector('input').checked));
+}
+
+/* ---------- CALENDAR ---------- */
+const MIN_LEAD_DAYS = 7;
+let today = new Date(); today.setHours(0,0,0,0);
+let minOrderDate = new Date(today); minOrderDate.setDate(today.getDate() + MIN_LEAD_DAYS);
+let viewYear = today.getFullYear();
+let viewMonth = today.getMonth();
+let selectedDate = null;
+
+const calGrid = document.getElementById('calGrid');
+const calMonthLabel = document.getElementById('calMonthLabel');
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function renderCalendar(){
+  calGrid.innerHTML = '';
+  ['S','M','T','W','T','F','S'].forEach(d => {
+    const dow = document.createElement('div');
+    dow.className = 'dow'; dow.textContent = d;
+    calGrid.appendChild(dow);
+  });
+  calMonthLabel.textContent = monthNames[viewMonth] + ' ' + viewYear;
+
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+  for(let i=0; i<firstDay; i++){
+    const e = document.createElement('div');
+    e.className = 'cal-day empty';
+    calGrid.appendChild(e);
+  }
+  for(let d=1; d<=daysInMonth; d++){
+    const cellDate = new Date(viewYear, viewMonth, d);
+    const cell = document.createElement('div');
+    cell.className = 'cal-day';
+    cell.textContent = d;
+    const isPast = cellDate < minOrderDate;
+    const isToday = cellDate.getTime() === today.getTime();
+    if(isToday) cell.classList.add('today');
+    if(isPast){
+      cell.classList.add('disabled');
+    } else {
+      cell.classList.add('available');
+      cell.addEventListener('click', () => {
+        selectedDate = cellDate;
+        document.querySelectorAll('.cal-day.selected').forEach(el => el.classList.remove('selected'));
+        cell.classList.add('selected');
+        const label = cellDate.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+        document.getElementById('selectedDateLabel').textContent = 'Requested date: ' + label;
+        updateSummary();
+      });
+    }
+    calGrid.appendChild(cell);
+  }
+}
+document.getElementById('prevMonth').addEventListener('click', () => {
+  viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+  renderCalendar();
+});
+document.getElementById('nextMonth').addEventListener('click', () => {
+  viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+  renderCalendar();
+});
+renderCalendar();
+
+/* ---------- LIVE SUMMARY ---------- */
+const occasionSel = document.getElementById('foccasion');
+const deliverySel = document.getElementById('fdelivery');
+
+function updateSummary(){
+  const size = document.querySelector('input[name="size"]:checked').value;
+  const cake = CAKE_PRICES[size];
+  document.getElementById('sumSize').textContent = cake.label;
+  document.getElementById('sumOccasion').textContent = occasionSel.value;
+  document.getElementById('sumDelivery').textContent = deliverySel.value;
+  document.getElementById('sumDate').textContent = selectedDate ? selectedDate.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) : '—';
+  document.getElementById('sumPrice').textContent = '$' + cake.price.toFixed(2);
+  document.getElementById('sumDeposit').textContent = '$' + (cake.price/2).toFixed(2);
+}
+occasionSel.addEventListener('change', updateSummary);
+deliverySel.addEventListener('change', updateSummary);
+updateSummary();
+
+/* ---------- SUBMIT ---------- */
+document.getElementById('submitOrderBtn').addEventListener('click', () => {
+  const form = document.getElementById('orderForm');
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+
+  if(!name || !email || !phone){
+    gsap.fromTo('.order-form', {x:-8}, {x:8, duration:.06, repeat:5, yoyo:true, clearProps:'x'});
+    if(!name) document.getElementById('fname').focus();
+    else if(!email) document.getElementById('femail').focus();
+    else document.getElementById('fphone').focus();
+    alert('Please fill in your name, email, and phone number so we can follow up.');
+    return;
+  }
+  if(!selectedDate){
+    alert('Please select a requested cake date (at least 7 days out) from the calendar.');
+    return;
+  }
+
+  const size = document.querySelector('input[name="size"]:checked').value;
+  const cake = CAKE_PRICES[size];
+  const design = document.getElementById('fdesign').value.trim();
+  const notes = document.getElementById('fnotes').value.trim();
+  const flavor = document.getElementById('fflavor').value;
+  const dateLabel = selectedDate.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  const body = [
+    'New Custom Cake Request — Nickey Sweets',
+    '',
+    'Name: ' + name,
+    'Email: ' + email,
+    'Phone: ' + phone,
+    'Occasion: ' + occasionSel.value,
+    'Cake Size: ' + cake.label,
+    'Flavor/Filling: ' + flavor,
+    'Pickup/Delivery: ' + deliverySel.value,
+    'Requested Date: ' + dateLabel,
+    'Starting Price: $' + cake.price.toFixed(2),
+    'Deposit Due (50%): $' + (cake.price/2).toFixed(2),
+    '',
+    'Design Vision:',
+    design || '(none provided)',
+    '',
+    'Additional Notes:',
+    notes || '(none provided)'
+  ].join('\n');
+
+  const mailto = 'mailto:nickcolbautista8@gmail.com?subject=' + encodeURIComponent('Custom Cake Request from ' + name) + '&body=' + encodeURIComponent(body);
+  window.location.href = mailto;
+
+  document.querySelector('.order-wrap').style.display = 'none';
+  document.querySelector('#order .section-head').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+  gsap.fromTo('#successMsg', {opacity:0, y:30}, {opacity:1, y:0, duration:.8});
+});
+
+/* pause marquee interaction handled via CSS :hover */
+</script>
+</body>
+</html>
